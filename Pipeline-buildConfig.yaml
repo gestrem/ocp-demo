@@ -1,4 +1,4 @@
-ind: "BuildConfig"
+kind: "BuildConfig"
 apiVersion: "v1"
 metadata:
   name: "My-Jenkins-Pipeline"
