@@ -1,7 +1,7 @@
 kind: "BuildConfig"
 apiVersion: "v1"
 metadata:
-  name: "My-Jenkins-Pipeline"
+  name: "jenkins-pipeline-build"
   namespace: "cotd-dev"
 labels:
   name: cotd-dev
