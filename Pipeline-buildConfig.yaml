@@ -1,33 +1,28 @@
-apiVersion: v1
-items:
-- kind: "BuildConfig"
-  apiVersion: "v1"
-  metadata:
-    name: "pipeline-demo1"
-  spec:
-    triggers:
-          - github:
-              secret: 5Mlic4Le
-            type: GitHub
-          - generic:
-              secret: FiArdDBH
-            type: Generic
-    strategy:
+ind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "My-Jenkins-Pipeline"
+  namespace: "cotd-dev"
+labels:
+  name: cotd-dev
+spec:
+  nodeSelector: {}
+  output: {}
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: "https://github.com/gestrem/ocp-demo.git"
+    type: Git
+  strategy:
+    jenkinsPipelineStrategy:
       type: "JenkinsPipeline"
-      jenkinsPipelineStrategy:
-        jenkinsfile: |
-                          node {
-                              stage ("Build")
-                                    echo '*** Build Starting ***'
-                                    openshiftBuild bldCfg: 'cotd2', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'true', verbose: 'true'
-                                    openshiftVerifyBuild bldCfg: 'cotd2', checkForTriggeredDeployments: 'false', namespace: '', verbose: 'false'
-                                    echo '*** Build Complete ***'
-                              stage ("Deploy and Verify in Development Env")
-                                    echo '*** Deployment Starting ***'
-                                    openshiftDeploy depCfg: 'cotd2', namespace: '', verbose: 'false', waitTime: ''
-                                    openshiftVerifyDeployment authToken: '', depCfg: 'cotd2', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
-                                    echo '*** Deployment Complete ***'
-                               }
-
-kind: List
-metadata: {}
+  triggers:
+  - github:
+      secret: secret101
+    type: GitHub
+  - generic:
+      secret: secret101
+    type: Generic
+      
