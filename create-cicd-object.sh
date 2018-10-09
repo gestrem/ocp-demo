@@ -8,11 +8,11 @@ oc new-project cotd-prod --description="3. Cat of the Day Prod Environment" --di
 
 
 echo "Enable Jenkins service account to manage resources in test and Project"
-oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-test
-oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-prod
+#oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-test
+#oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-prod
 oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
-oc policy add-role-to-user edit system:serviceaccount:cotd-test:jenkins -n cotd-test
-oc policy add-role-to-user edit system:serviceaccount:cotd-prod:jenkins -n cotd-prod
+oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-test
+oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
 
 
 echo "Enable the pulling of images from dev to test and prod "
@@ -24,11 +24,11 @@ oc policy add-role-to-group system:image-puller system:serviceaccounts:cotd-prod
 
 echo "Deploy App from Registry"
 
-oc new-app cotd-dev/cats:latest --name=cats -n cotd-test
-oc new-app cotd-dev/cats:latest --name=cats -n cotd-prod
+oc new-app cotd-dev/cotd:latest --name=cotd -n cotd-test
+oc new-app cotd-dev/cotd:latest --name=cotd -n cotd-prod
 
-oc expose svc/cats -n cotd-test
-oc expose svc/cats -n cotd-prod
+oc expose svc/cotd -n cotd-test
+oc expose svc/cotd -n cotd-prod
 
 
 

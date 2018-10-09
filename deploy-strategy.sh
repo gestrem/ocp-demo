@@ -6,16 +6,18 @@ oc new-project cotd-dev
 
 #deploy two cotd version (cats / cities)
 
-oc new-app openshift/php:5.6~https://github.com/StefanoPicozzi/cotd2.git  --name=cities -e SELECTOR=cities
-
-oc new-app openshift/php:7.1~https://github.com/StefanoPicozzi/cotd2.git  --name=pets -e SELECTOR=pets
 
 #Blue green deployment
 
-oc expose svc/cities -n cotd-dev
 
-oc patch route/bluegreen-example -p '{"spec":{"to":{"name":"example-blue"}}}'
+
+oc expose svc/cities --name=bluegreen-route -n cotd-dev
+
+oc patch route/bluegreen-route -p '{"spec":{"to":{"name":"cats"}}}' -n cotd-dev
+
+
 #expose route
+
 
 oc expose svc/pets --name=cats
 oc expose svc/cities --name=cities
