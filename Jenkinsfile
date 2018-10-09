@@ -2,8 +2,8 @@ node {
         stage ("Build"){
             echo '*** Build Starting ***'
 
-            openshiftBuild bldCfg: 'cities', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'false', verbose: 'false'
-            openshiftVerifyBuild bldCfg: 'cities', checkForTriggeredDeployments: 'false', namespace: 'cotd-dev', verbose: 'false'
+            openshiftBuild bldCfg: 'cats', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'false', verbose: 'false'
+            openshiftVerifyBuild bldCfg: 'cats', checkForTriggeredDeployments: 'false', namespace: 'cotd-dev', verbose: 'false'
 
 
             echo '*** Build Complete ***'
@@ -11,25 +11,27 @@ node {
 
         stage ("Tag Image "){
 
-            openshiftTag(srcStream: 'cities', srcTag: 'latest', destStream: 'cities', destTag: 'stage')
+            openshiftTag(srcStream: 'cats', srcTag: 'latest', destStream: 'cats', destTag: 'stage')
 
 
         }
             
-        stage ("Deploy and Verify in Development Env"){
+        stage ("Deploy and Verify in Test Env"){
             echo '*** Deployment Starting ***'
-            openshiftDeploy depCfg: 'cities', namespace: '', verbose: 'false', waitTime: ''
-            openshiftVerifyDeployment depCfg: 'cities', namespace: 'cotd-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+            openshiftDeploy depCfg: 'cats', namespace: '', verbose: 'false', waitTime: ''
+            openshiftVerifyDeployment depCfg: 'cats', namespace: 'cotd-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
             echo '*** Deployment Complete ***'
 
             }
 
-        stage ("Deploy and Verify in Test Env"){
+        stage ("Deploy and Verify in Prod Env"){
 
 
             echo '*** Deployment Starting ***'
-            openshiftDeploy depCfg: 'cities', namespace: 'cotd-prod', verbose: 'false', waitTime: ''
-            openshiftVerifyDeployment depCfg: 'cities', namespace: 'cotd-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+            echo '*** Waiting for Input ***'
+            input 'Should we deploy to Production?' 
+            openshiftDeploy depCfg: 'cats', namespace: 'cotd-prod', verbose: 'false', waitTime: ''
+            openshiftVerifyDeployment depCfg: 'cats', namespace: 'cotd-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
             echo '*** Deployment Complete ***'
 
         }

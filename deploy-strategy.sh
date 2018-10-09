@@ -10,6 +10,11 @@ oc new-app openshift/php:5.6~https://github.com/StefanoPicozzi/cotd2.git  --name
 
 oc new-app openshift/php:7.1~https://github.com/StefanoPicozzi/cotd2.git  --name=pets -e SELECTOR=pets
 
+#Blue green deployment
+
+oc expose svc/cities -n cotd-dev
+
+oc patch route/bluegreen-example -p '{"spec":{"to":{"name":"example-blue"}}}'
 #expose route
 
 oc expose svc/pets --name=cats
