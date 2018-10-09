@@ -11,6 +11,9 @@ echo "Enable Jenkins service account to manage resources in test and Project"
 oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-test
 oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-prod
 oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
+oc policy add-role-to-user edit system:serviceaccount:cotd-test:jenkins -n cotd-test
+oc policy add-role-to-user edit system:serviceaccount:cotd-prod:jenkins -n cotd-prod
+
 
 echo "Enable the pulling of images from dev to test and prod "
 

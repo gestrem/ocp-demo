@@ -18,7 +18,7 @@ node {
             
         stage ("Deploy and Verify in Test Env"){
             echo '*** Deployment Starting ***'
-            openshiftDeploy depCfg: 'cats', namespace: '', verbose: 'false', waitTime: ''
+            openshiftDeploy depCfg: 'cats', namespace: 'cotd-test', verbose: 'false', waitTime: ''
             openshiftVerifyDeployment depCfg: 'cats', namespace: 'cotd-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
             echo '*** Deployment Complete ***'
 
@@ -31,7 +31,7 @@ node {
             echo '*** Waiting for Input ***'
             input 'Should we deploy to Production?' 
             openshiftDeploy depCfg: 'cats', namespace: 'cotd-prod', verbose: 'false', waitTime: ''
-            openshiftVerifyDeployment depCfg: 'cats', namespace: 'cotd-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+            openshiftVerifyDeployment depCfg: 'cats', namespace: 'cotd-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
             echo '*** Deployment Complete ***'
 
         }
