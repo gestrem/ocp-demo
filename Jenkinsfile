@@ -9,9 +9,9 @@ node {
             echo '*** Build Complete ***'
         }
 
-        stage ("Tag Image"){
+        stage ("Promote image to Test"){
 
-            openshiftTag(srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'stage')
+            openshiftTag(srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'testready')
 
 
         }
@@ -24,6 +24,12 @@ node {
 
             }
 
+   stage ("Promote image to Production"){
+
+            openshiftTag(srcStream: 'cotd', srcTag: 'testready', destStream: 'cotd', destTag: 'prodready')
+
+
+        }
         stage ("Deploy and Verify in Prod Env"){
 
 

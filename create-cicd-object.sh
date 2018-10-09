@@ -24,8 +24,8 @@ oc policy add-role-to-group system:image-puller system:serviceaccounts:cotd-prod
 
 echo "Deploy App from Registry"
 
-oc new-app cotd-dev/cotd:latest --name=cotd -n cotd-test
-oc new-app cotd-dev/cotd:latest --name=cotd -n cotd-prod
+oc new-app cotd-dev/cotd:testready --name=cotd -n cotd-test
+oc new-app cotd-dev/cotd:prodready --name=cotd -n cotd-prod
 
 oc expose svc/cotd -n cotd-test
 oc expose svc/cotd -n cotd-prod
