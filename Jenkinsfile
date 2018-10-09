@@ -11,7 +11,7 @@ node {
 
         stage ("Promote image to Test"){
 
-            openshiftTag(srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'testready')
+            openshiftTag(namespace: 'cotd-dev', srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'testready')
 
 
         }
@@ -26,7 +26,7 @@ node {
 
    stage ("Promote image to Production"){
 
-            openshiftTag(srcStream: 'cotd', srcTag: 'testready', destStream: 'cotd', destTag: 'prodready')
+            openshiftTag(namespace: 'cotd-dev',srcStream: 'cotd', srcTag: 'testready', destStream: 'cotd', destTag: 'prodready')
 
 
         }
