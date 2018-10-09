@@ -2,7 +2,7 @@ node {
         stage ("Build"){
             echo '*** Build Starting ***'
 
-            openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'false', verbose: 'false'
+            openshiftBuild bldCfg: 'cotd', buildName: 'cotd', checkForTriggeredDeployments: 'false', commitID: '', namespace: 'cotd-dev', showBuildLogs: 'false', verbose: 'false'
             openshiftVerifyBuild bldCfg: 'cotd', checkForTriggeredDeployments: 'false', namespace: 'cotd-dev', verbose: 'false'
 
 

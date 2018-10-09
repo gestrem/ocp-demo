@@ -8,14 +8,17 @@ oc new-project cotd-prod --description="3. Cat of the Day Prod Environment" --di
 
 
 echo "Enable Jenkins service account to manage resources in test and Project"
-#oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-test
-#oc policy add-role-to-user edit system:serviceaccount:cicd-tools:jenkins -n cotd-prod
-oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
-oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-test
-oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
+oc project jenkins
+oc policy add-role-to-user edit system:serviceaccount:jenkins:jenkins -n cotd-dev
+oc policy add-role-to-user edit system:serviceaccount:jenkins:jenkins -n cotd-test
+oc policy add-role-to-user edit system:serviceaccount:jenkins:jenkins -n cotd-prod
+#oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
+#oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-test
+#oc policy add-role-to-user edit system:serviceaccount:cotd-dev:jenkins -n cotd-prod
 
 
 echo "Enable the pulling of images from dev to test and prod "
+oc project cotd-dev
 
 oc policy add-role-to-group system:image-puller system:serviceaccounts:cotd-test -n cotd-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:cotd-prod -n cotd-dev
